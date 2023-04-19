@@ -1,9 +1,8 @@
 import telebot
 import config
 import socket
-import urllib
-import bs4
-from bs4 import BeautifulSoup
+
+import http.client
 
 bot = telebot.TeleBot(config.TOKEN)
 
@@ -11,18 +10,15 @@ bot = telebot.TeleBot(config.TOKEN)
 
 
 def test1(message):
-    page = urllib.urlopen('https://2ip.ru/')
-    soup = BeautifulSoup(page)
-
-    x = soup.body.find('span', attrs={'class': 'ip'}).text
-
+    conn = http.client.HTTPConnection("ifconfig.me")
+    conn.request("GET", "/ip")
+    x = conn.getresponse().read()
     print(x)
     hostname = socket.gethostname()
 
     IPAddr = socket.gethostbyname(hostname)
-    bot.send_message(message.chat.id, IPAddr)
+    bot.send_message(message.chat.id, x)
     print(IPAddr)
-    print(soup.ip)
 
 
 bot.polling(none_stop=True)
