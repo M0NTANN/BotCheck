@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "node-telegram-bot-api": "^0.61.0",
+    "ping": "^0.4.4"
+  },
+  "devDependencies": {
+    "ngrok": "^4.3.3"
+  }
+}
